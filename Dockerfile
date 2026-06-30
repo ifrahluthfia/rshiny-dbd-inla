@@ -1,30 +1,29 @@
-# build-trigger-v3-ubuntu24
-FROM rocker/r-ubuntu:24.04
+# build-trigger-v4-r2u
+FROM rocker/r2u:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# System libraries dibutuhkan untuk sf, spdep, dan geospatial stack lainnya
+# r2u menyediakan package R sebagai binary lewat apt, jadi install jauh lebih
+# cepat dan tidak perlu compile dari source (menghindari masalah dependency
+# seperti s2/sf yang gagal compile manual).
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libcurl4-openssl-dev \
-    libssl-dev \
-    libxml2-dev \
-    libgdal-dev \
-    gdal-bin \
-    libgeos-dev \
-    libproj-dev \
-    libudunits2-dev \
-    libfontconfig1-dev \
-    libharfbuzz-dev \
-    libfribidi-dev \
-    libfreetype6-dev \
-    libpng-dev \
-    libtiff5-dev \
-    libjpeg-dev \
+    r-cran-plumber \
+    r-cran-dplyr \
+    r-cran-jsonlite \
+    r-cran-httr2 \
+    r-cran-dt \
+    r-cran-ggplot2 \
+    r-cran-tidyr \
+    r-cran-car \
+    r-cran-sf \
+    r-cran-spdep \
     libsodium-dev \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-RUN Rscript -e "install.packages(c('plumber','dplyr','jsonlite','httr2','DT','ggplot2','tidyr','car','sf','spdep','fmesher'), repos='https://cloud.r-project.org')"
+# fmesher tidak selalu tersedia sebagai binary r2u, install dari CRAN source
+# (sf sudah ada lewat binary di atas, jadi fmesher tinggal compile ringan)
+RUN Rscript -e "install.packages('fmesher', repos='https://cloud.r-project.org')"
 
 RUN Rscript -e "install.packages('INLA', repos=c(INLA='https://inla.r-inla-download.org/R/stable', CRAN='https://cloud.r-project.org'))"
 
