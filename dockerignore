@@ -1,0 +1,7 @@
+app.R
+install_packages.R
+run_api.R
+DEPLOYMENT.md
+data/
+.git
+.gitignore

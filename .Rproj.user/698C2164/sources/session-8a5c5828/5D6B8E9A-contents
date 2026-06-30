@@ -19,9 +19,11 @@ library(sf)
 library(spdep)
 library(jsonlite)
 
-port <- Sys.getenv("PORT")
-if (port == "") port <- 8080
-port <- as.numeric(port)
+# LOAD API FILE
+pr <- plumber::plumb("api.R")
+
+# RUN SERVER
+port <- as.numeric(Sys.getenv("PORT", 8080))
 
 pr$run(
   host = "0.0.0.0",
