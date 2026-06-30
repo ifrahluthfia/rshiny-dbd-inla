@@ -1,4 +1,4 @@
-FROM rocker/geospatial:4.3.3
+FROM rocker/geospatial:4.5
 
 ENV DEBIAN_FRONTEND=noninteractive
 
