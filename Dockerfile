@@ -1,30 +1,15 @@
-FROM rocker/r-ver:4.3.2
+FROM rocker/geospatial:4.3.3
 
-# ---- Dependency sistem untuk sf, spdep, dan R-INLA ----
-RUN apt-get update && apt-get install -y \
-    libcurl4-openssl-dev \
-    libssl-dev \
-    libxml2-dev \
-    libgdal-dev \
-    libgeos-dev \
-    libproj-dev \
-    libudunits2-dev \
-    && rm -rf /var/lib/apt/lists/*
+ENV DEBIAN_FRONTEND=noninteractive
 
-# ---- Package R yang dibutuhkan API ----
-RUN R -e "install.packages(c('plumber','dplyr','sf','spdep','jsonlite'), repos='https://cloud.r-project.org')"
+RUN Rscript -e "install.packages(c('plumber','dplyr','jsonlite','httr2','DT','ggplot2','tidyr','car','sf','spdep'), repos='https://cloud.r-project.org')"
 
-# ---- Package INLA ----
-RUN R -e "install.packages('INLA', repos=c(getOption('repos'), INLA='https://inla.r-inla-download.org/R/stable'))"
+RUN Rscript -e "install.packages('INLA', repos=c(INLA='https://inla.r-inla-download.org/R/stable', CRAN='https://cloud.r-project.org'))"
 
 WORKDIR /app
 
-# ---- Salin file yang dibutuhkan API saja ----
-COPY api.R /app/api.R
-COPY shp/ /app/shp/
+COPY . .
 
-# Render menentukan PORT lewat environment variable, bukan selalu 8000
-ENV PORT=8000
-EXPOSE 8000
+EXPOSE 10000
 
-CMD ["R", "-e", "plumber::plumb('api.R')$run(host='0.0.0.0', port=as.numeric(Sys.getenv('PORT', 8000)))"]
+CMD ["Rscript", "-e", "pr <- plumber::plumb('api.R'); pr$run(host='0.0.0.0', port=as.numeric(Sys.getenv('PORT', Sys.getenv('PORT', 10000))))"]
