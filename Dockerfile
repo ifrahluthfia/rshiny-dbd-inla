@@ -1,6 +1,5 @@
 FROM rocker/r-ver:4.4.1
 
-# Install Linux dependencies
 RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
     libssl-dev \
@@ -20,17 +19,12 @@ RUN apt-get update && apt-get install -y \
     g++ \
     && rm -rf /var/lib/apt/lists/*
 
-# Install R packages
-RUN R -e "install.packages(c( \
-'plumber', \
-'dplyr', \
-'jsonlite', \
-'sf', \
-'spdep' \
-), repos='https://cloud.r-project.org')"
+RUN Rscript -e "install.packages(c('plumber','dplyr','jsonlite','sf','spdep'), repos='https://cloud.r-project.org')"
 
-# Install INLA
-RUN R -e "install.packages('INLA', repos=c(getOption('repos'), INLA='https://inla.r-inla-download.org/R/stable'))"
+RUN Rscript -e "install.packages('INLA', repos=c(INLA='https://inla.r-inla-download.org/R/stable', CRAN='https://cloud.r-project.org'))"
+
+# CEK PAKET
+RUN Rscript -e "library(plumber); library(INLA)"
 
 WORKDIR /app
 
