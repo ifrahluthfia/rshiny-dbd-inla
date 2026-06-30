@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-RUN Rscript -e "install.packages(c('plumber','dplyr','jsonlite','httr2','DT','ggplot2','tidyr','car','sf','spdep'), repos='https://cloud.r-project.org')"
+RUN Rscript -e "install.packages(c('plumber','dplyr','jsonlite','httr2','DT','ggplot2','tidyr','car','sf','spdep','fmesher'), repos='https://cloud.r-project.org')"
 
 RUN Rscript -e "install.packages('INLA', repos=c(INLA='https://inla.r-inla-download.org/R/stable', CRAN='https://cloud.r-project.org'))"
 
