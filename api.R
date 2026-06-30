@@ -19,6 +19,15 @@ library(sf)
 library(spdep)
 library(jsonlite)
 
+port <- Sys.getenv("PORT")
+if (port == "") port <- 8080
+port <- as.numeric(port)
+
+pr$run(
+  host = "0.0.0.0",
+  port = port
+)
+
 # ----------------------------------------------------------------
 # Load shapefile SEKALI saat API start (bukan setiap request)
 # ----------------------------------------------------------------
@@ -29,10 +38,28 @@ kab_col_global <- "Kabupaten"
 # ----------------------------------------------------------------
 # Helper: bangun adjacency graph INLA dari shapefile + data
 # ----------------------------------------------------------------
+shp_global[[kab_col_global]] <- trimws(tolower(shp_global[[kab_col_global]]))
+
 build_graph <- function(d) {
+  
+  d$kabkota <- trimws(tolower(d$kabkota))
+  
   shp <- shp_global[shp_global[[kab_col_global]] %in% d$kabkota, ]
-  nb  <- spdep::poly2nb(shp)
-  g   <- INLA::inla.read.graph(nb)
+  
+  cat("MATCH COUNT:", nrow(shp), "\n")
+  
+  if (nrow(shp) < 2) {
+    stop("Kabkota tidak cukup / tidak match dengan shapefile")
+  }
+  
+  nb <- spdep::poly2nb(shp)
+  
+  if (length(nb) == 0) {
+    stop("Adjacency graph kosong")
+  }
+  
+  g <- INLA::inla.read.graph(nb)
+  
   list(g = g, shp = shp, kab_col = kab_col_global)
 }
 

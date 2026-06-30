@@ -32,7 +32,7 @@ library(jsonlite)
 # Lokal   : "http://127.0.0.1:8000"
 # Online  : "https://nama-app-anda.onrender.com" (atau VPS/Railway Anda)
 # ----------------------------------------------------------------
-API_URL <- "http://127.0.0.1:8000"
+API_URL <- "https://rshiny-dbd-inla-production.up.railway.app"
 
 # ============================================================
 # UI  — TIDAK DIUBAH SAMA SEKALI dari versi asli Anda

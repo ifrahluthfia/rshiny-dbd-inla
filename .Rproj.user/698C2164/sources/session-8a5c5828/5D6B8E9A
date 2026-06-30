@@ -3,7 +3,7 @@
     "path": "~/DATA MBKM BRIN/rshiny dbd 2/api.R",
     "project_path": "api.R",
     "type": "r_source",
-    "hash": "0",
+    "hash": "1518869533",
     "contents": "",
     "dirty": false,
     "created": 1782804949023.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "292,0",
-        "scrollLine": "0"
+        "cursorPosition": "39,66",
+        "scrollLine": "38"
     },
     "folds": "",
-    "lastKnownWriteTime": 1782799233,
+    "lastKnownWriteTime": 1782812799,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1782799233,
+    "last_content_update": 1782812799624,
     "read_only": false,
     "read_only_alternatives": []
 }

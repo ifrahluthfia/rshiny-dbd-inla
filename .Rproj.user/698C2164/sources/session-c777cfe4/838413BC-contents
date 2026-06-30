@@ -1,0 +1,17 @@
+library(httr2)
+
+req <- request("https://rshiny-dbd-inla-production.up.railway.app/run") |>
+  req_method("POST") |>
+  req_body_json(list(
+    data = data.frame(
+      kabkota = c("A", "B"),
+      tahun = c(2020, 2021),
+      y = c(10, 15)
+    ),
+    covariates = c("y"),
+    spatial_model = "bym2",
+    temporal_model = "rw1"
+  ))
+
+resp <- req_perform(req)
+resp_body_json(resp)

@@ -1,0 +1,13 @@
+name: rshiny2
+title: rshiny2
+username: ifrahluthfia
+account: ifrahluthfia
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 17567172
+bundleId: 12199592
+url: https://ifrahluthfia.shinyapps.io/rshiny2/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .dockerignore|.RData|api.R|Dockerfile|install_packages.R|run_api.R

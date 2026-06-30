@@ -29,4 +29,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["Rscript", "run_api.R"]
+CMD ["Rscript", "api.R"]
