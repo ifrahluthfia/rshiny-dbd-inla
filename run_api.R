@@ -1,0 +1,17 @@
+# ============================================================
+# RUN_API.R — Jalankan Plumber API secara lokal
+# ============================================================
+# Cara pakai:
+#   1. Buka R / RStudio
+#   2. setwd("path/ke/folder/project")
+#   3. source("run_api.R")
+#
+# API akan berjalan di: http://127.0.0.1:8000
+# Coba health check di browser: http://127.0.0.1:8000/health
+# ============================================================
+
+library(plumber)
+
+pr <- plumber::plumb("api.R")
+
+pr$run(host = "0.0.0.0", port = 8000)
