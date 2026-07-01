@@ -134,12 +134,15 @@ fit_inla_model <- function(d, gr, covariates, spat_model, temp_model) {
                 "'. Gunakan 'rw1', 'rw2', atau 'ar1'."))
   }
   
+  # Batasi thread INLA supaya tidak rakus RAM
+  INLA::inla.setOption(num.threads = "1:1")
+  
   INLA::inla(
     f,
     family = "nbinomial",
     data = d,
     E = d$E,
-    control.compute  = list(dic = TRUE, waic = TRUE, cpo = TRUE),
+    control.compute  = list(dic = TRUE, waic = TRUE, cpo = FALSE),
     control.predictor = list(compute = TRUE)
   )
 }
