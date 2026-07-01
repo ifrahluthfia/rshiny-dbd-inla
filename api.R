@@ -47,7 +47,11 @@ build_graph <- function(d) {
     stop("Adjacency graph kosong")
   }
   
-  g <- INLA::inla.read.graph(nb)
+  # Tulis graph ke file temporer lalu baca ulang — cara paling robust
+  # untuk semua versi INLA (menghindari error "no method for coercing listw")
+  tmp <- tempfile(fileext = ".graph")
+  spdep::nb2INLA(tmp, nb)
+  g <- INLA::inla.read.graph(tmp)
   
   list(g = g, shp = shp, kab_col = kab_col_global)
 }
